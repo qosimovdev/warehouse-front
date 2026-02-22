@@ -25,7 +25,7 @@ function Companies() {
   // Add new company
   const addCompany = async () => {
     if (!name.trim()) return;
-
+    setLoading(true);
     try {
       await API.post("/company", { name: name.trim() });
       setName("");
@@ -52,10 +52,12 @@ function Companies() {
           placeholder="New company"
         />
         <button
+          type="submit"
           onClick={addCompany}
+          disabled={loading}
           className="bg-blue-600 text-white px-4 rounded"
         >
-          Add
+          {loading ? "Adding..." : "Add"}
         </button>
       </div>
 
@@ -66,7 +68,7 @@ function Companies() {
         {companies.map((c) => (
           <li
             key={c._id}
-            className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-2 rounded shadow"
+            className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-2 rounded shadow border-2 border-gray-300"
           >
             <div className="font-medium">{c.name}</div>
             {c.phone && (

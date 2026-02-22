@@ -23,6 +23,7 @@ function Products() {
 
   const addProduct = async () => {
     if (!name.trim()) return;
+    setLoading(true);
     try {
       await API.post("/product", { name: name.trim() });
       setName("");
@@ -48,9 +49,10 @@ function Products() {
         />
         <button
           onClick={addProduct}
-          className="bg-blue-600 text-white px-4 rounded"
+          disabled={loading}
+          className="bg-blue-600 text-white px-4 rounded cursor-pointer disabled:opacity-50"
         >
-          Add
+          {loading ? "Adding..." : "Add"}
         </button>
       </div>
       {error && <p className="text-red-500 mb-2">{error}</p>}
@@ -60,7 +62,7 @@ function Products() {
         {products.map((p) => (
           <li
             key={p._id}
-            className="flex justify-between items-center bg-white p-2 rounded shadow"
+            className="flex justify-between items-center bg-white p-2 rounded shadow border-2 border-gray-300"
           >
             <span>{p.name}</span>
             <span className="text-gray-500 text-sm">

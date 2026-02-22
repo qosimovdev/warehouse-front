@@ -49,8 +49,10 @@ function Purchases() {
   };
 
   // Add new purchase
-  const addPurchase = async () => {
+  const addPurchase = async (e) => {
     if (!company || !product || !quantity || !price) return;
+    setLoading(true);
+    e.preventDefault();
 
     try {
       await API.post("/purchase", {
@@ -82,63 +84,109 @@ function Purchases() {
     <div className="p-4 pb-20">
       <h1 className="text-xl font-bold mb-4">Purchases</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-2 mb-4">
-        <select
-          value={company}
-          onChange={(e) => setCompany(e.target.value)}
-          className="border p-2 rounded"
-        >
-          <option value="">Select Company</option>
-          {companies.map((c) => (
-            <option key={c._id} value={c._id}>
-              {c.name}
-            </option>
-          ))}
-        </select>
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-3 mb-4 ">
+        {/* Company */}
+        <div className="flex flex-col">
+          <label
+            htmlFor="company"
+            className="text-sm font-medium text-gray-700"
+          >
+            Company
+          </label>
+          <select
+            id="company"
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
+            className="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">Select Company</option>
+            {companies.map((c) => (
+              <option key={c._id} value={c._id}>
+                {c.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
-        <select
-          value={product}
-          onChange={(e) => setProduct(e.target.value)}
-          className="border p-2 rounded"
-        >
-          <option value="">Select Product</option>
-          {products.map((p) => (
-            <option key={p._id} value={p._id}>
-              {p.name}
-            </option>
-          ))}
-        </select>
+        {/* Product */}
+        <div className="flex flex-col">
+          <label
+            htmlFor="product"
+            className="text-sm font-medium text-gray-700"
+          >
+            Product
+          </label>
+          <select
+            id="product"
+            value={product}
+            onChange={(e) => setProduct(e.target.value)}
+            className="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">Select Product</option>
+            {products.map((p) => (
+              <option key={p._id} value={p._id}>
+                {p.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
-        <input
-          type="number"
-          placeholder="Quantity"
-          value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
-          className="border p-2 rounded"
-        />
+        {/* Quantity */}
+        <div className="flex flex-col">
+          <label
+            htmlFor="quantity"
+            className="text-sm font-medium text-gray-700"
+          >
+            Quantity
+          </label>
+          <input
+            id="quantity"
+            type="number"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+            className="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
-        <input
-          type="number"
-          placeholder="Price per unit"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          className="border p-2 rounded"
-        />
+        {/* Price */}
+        <div className="flex flex-col">
+          <label htmlFor="price" className="text-sm font-medium text-gray-700">
+            Price per unit
+          </label>
+          <input
+            id="price"
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            className="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
-        <input
-          type="number"
-          placeholder="Paid"
-          value={paid}
-          onChange={(e) => setPaid(e.target.value)}
-          className="border p-2 rounded"
-        />
+        {/* Paid */}
+        <div className="flex flex-col">
+          <label htmlFor="paid" className="text-sm font-medium text-gray-700">
+            Paid
+          </label>
+          <input
+            id="paid"
+            type="number"
+            value={paid}
+            onChange={(e) => setPaid(e.target.value)}
+            className="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
-        <button
-          onClick={addPurchase}
-          className="bg-blue-600 text-white px-4 py-2 rounded col-span-1 md:col-span-1"
-        >
-          Add
-        </button>
+        {/* Button */}
+        <div className="flex items-end">
+          <button
+            type="submit"
+            onClick={addPurchase}
+            disabled={loading}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded w-full transition disabled:opacity-50 cursor-pointer"
+          >
+            {loading ? "Adding..." : "Add"}
+          </button>
+        </div>
       </div>
 
       {error && <p className="text-red-500 mb-2">{error}</p>}
@@ -148,14 +196,11 @@ function Purchases() {
       <ul className="space-y-3">
         {purchases.map((p) => {
           const debt = p.debt || 0;
-
-          //   Format numbers with commas
           const formatNumber = (num) => Number(num).toLocaleString();
-
           return (
             <li
               key={p._id}
-              className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-4 rounded-lg shadow"
+              className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-4 rounded-lg shadow border-2 border-gray-300"
             >
               {/* Company & Product */}
               <div className="font-semibold text-lg mb-2 md:mb-0">

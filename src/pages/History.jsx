@@ -130,7 +130,7 @@ function History() {
         {history.map((h) => (
           <div
             key={h._id}
-            className="bg-white shadow-md rounded-lg p-5 hover:shadow-xl transition duration-200"
+            className="bg-white shadow-md rounded-lg p-5 border-2 border-gray-300 hover:shadow-xl transition duration-200"
           >
             <div className="flex justify-between items-center flex-wrap gap-2 mb-2">
               <div className="flex gap-2 flex-wrap">
