@@ -9,7 +9,7 @@ function BottomNavbar() {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t flex justify-around py-2 md:hidden">
-      <NavLink to="/purchases" className={linkStyle}>
+      <NavLink to="/" className={linkStyle}>
         <ShoppingCart size={20} />
         Purchases
       </NavLink>
