@@ -37,7 +37,7 @@ function AppContent() {
             <Route
               path="/"
               element={
-                user ? <Navigate to="/products" /> : <Navigate to="/login" />
+                user ? <Navigate to="/purchases" /> : <Navigate to="/login" />
               }
             />
             <Route path="/login" element={<Login />} />
@@ -58,7 +58,7 @@ function AppContent() {
               }
             />
             <Route
-              path="/purchases"
+              path="/"
               element={
                 <PrivateRoute>
                   <Purchases />
