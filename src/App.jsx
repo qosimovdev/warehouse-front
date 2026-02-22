@@ -60,7 +60,6 @@
 //   );
 // }
 
-// export default App;
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./auth/Login";
 import Products from "./pages/Products";
@@ -71,6 +70,7 @@ import BottomNavbar from "./layout/BottomNavbar";
 import { AuthProvider } from "./auth/AuthProvider";
 import { useAuth } from "./auth/auth";
 import Header from "./components/Header";
+import "./assets/css/index.css";
 
 function PrivateRoute({ children }) {
   const { user } = useAuth();
@@ -87,14 +87,18 @@ function App() {
   );
 }
 
-// alohida komponent ichida useAuth() chaqiramiz
 function AppContent() {
-  const { user } = useAuth(); // endi ishlaydi
-
+  const { user } = useAuth();
   return (
     <>
       <Header />
       <Routes>
+        <Route
+          path="/"
+          element={
+            user ? <Navigate to="/products" /> : <Navigate to="/login" />
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route
           path="/products"

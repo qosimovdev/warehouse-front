@@ -79,10 +79,13 @@ import { useAuth } from "./auth";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
-  const { login } = useAuth(); // contextdan login funksiyasini oling
+  const { login } = useAuth();
 
   const handleLogin = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       const res = await API.post("/auth/login", { email, password });
@@ -93,7 +96,7 @@ function Login() {
       }
 
       login(res.data.accessToken, res.data.user);
-      navigate("/products"); // login muvaffaqiyatli bo'lgach
+      navigate("/purchases");
     } catch (err) {
       console.error(err);
       alert("Login failed. Check your email and password.");
@@ -124,8 +127,12 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button className="w-full bg-blue-600 text-white p-3 rounded-lg">
-          Login
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg disabled:opacity-50"
+        >
+          {loading ? "Logging in..." : "Login"}
         </button>
       </form>
     </div>
