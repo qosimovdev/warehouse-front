@@ -11,22 +11,22 @@ function BottomNavbar() {
     <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t flex justify-around py-2 md:hidden">
       <NavLink to="/" className={linkStyle}>
         <ShoppingCart size={20} />
-        Purchases
+        Kirim
       </NavLink>
 
       <NavLink to="/products" className={linkStyle}>
         <Box size={20} />
-        Products
+        Maxsulotlar
       </NavLink>
 
       <NavLink to="/companies" className={linkStyle}>
         <Building2 size={20} />
-        Companies
+        Firma
       </NavLink>
 
       <NavLink to="/history" className={linkStyle}>
         <Clock size={20} />
-        History
+        Tarix
       </NavLink>
     </div>
   );

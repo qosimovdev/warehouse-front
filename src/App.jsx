@@ -12,7 +12,10 @@ import { useAuth } from "./auth/auth";
 import "./assets/css/index.css";
 
 function PrivateRoute({ children }) {
-  const { user } = useAuth();
+  const { user, loading } = useAuth(); // loading flag
+
+  if (loading) return <div>Loading...</div>; // user ma'lumotlari kelguncha
+
   return user ? children : <Navigate to="/login" />;
 }
 
@@ -36,8 +39,13 @@ function AppContent() {
           <Routes>
             <Route
               path="/"
-              element={user ? <Navigate to="/" /> : <Navigate to="/login" />}
+              element={
+                <PrivateRoute>
+                  <Purchases />
+                </PrivateRoute>
+              }
             />
+
             <Route path="/login" element={<Login />} />
             <Route
               path="/products"
@@ -52,14 +60,6 @@ function AppContent() {
               element={
                 <PrivateRoute>
                   <Companies />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/"
-              element={
-                <PrivateRoute>
-                  <Purchases />
                 </PrivateRoute>
               }
             />
